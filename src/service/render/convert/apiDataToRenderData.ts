@@ -206,7 +206,7 @@ const getTextType = (text: string) => {
         JSON.parse(text)
         return 'json'
     } catch {
-        // XML HTML 无法准确区分，使用其他方案：metadata 上记录 Response Body Text Type
+        // XML HTML 無法准确区分，使用其他方案：metadata 上记录 Response Body Text Type
         return 'text'
     }
 }

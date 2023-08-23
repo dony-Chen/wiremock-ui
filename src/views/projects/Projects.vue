@@ -2,31 +2,31 @@
     <el-drawer id="project-drawer" v-model="isShowProjects" direction="ltr" size="50%" @closed="isShowProjects = false">
         <template #header="{}">
             <div class="title">
-                <b>项目信息管理</b>
+                <b>項目信息管理</b>
             </div>
         </template>
         <div class="tools">
             <el-button type="primary" :icon="Plus" size="small" @click="addItem"></el-button>
         </div>
         <el-table :data="projects" :row-key="getRowKey">
-            <el-table-column label="项目名称" width="250">
+            <el-table-column label="項目名稱" width="250">
                 <template #default="scope">
                     <EditableCell type="text" v-model="scope.row.name" />
                 </template>
             </el-table-column>
-            <el-table-column label="项目地址" width="300">
+            <el-table-column label="項目地址" width="300">
                 <template #default="scope">
                     <EditableCell type="text" v-model="scope.row.url" @blur="(newValue: string) => changeUrl(scope.row)" />
                 </template>
             </el-table-column>
-            <el-table-column label="项目描述">
+            <el-table-column label="項目描述">
                 <template #default="scope">
                     <EditableCell type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="scope.row.desc" />
                 </template>
             </el-table-column>
             <el-table-column width="60" label="操作">
                 <template #default="scope">
-                    <el-popconfirm :title="`确定删除【${scope.row.name}】？`" @confirm="delItem(scope.row.id)" width="200">
+                    <el-popconfirm :title="`確定刪除【${scope.row.name}】？`" @confirm="delItem(scope.row.id)" width="200">
                         <template #reference>
                             <el-button :icon="Delete" type="danger" size="small"></el-button>
                         </template>
@@ -57,16 +57,16 @@ const shareStateStore = useShareStatesStore()
 const { isShowProjects, currentProjectId, currentMockUrl } = storeToRefs(shareStateStore)
 
 /**
- * 为 el-table 每一行生成唯一 Key，防止就地更新时渲染错误
- * @param row 行数据
+ * 为 el-table 每一行生成唯一 Key，防止就地更新時渲染錯誤
+ * @param row 行數據
  */
 const getRowKey = (row: IProject) => {
     return row.id
 }
 
 /**
- * 监听 URL 值的变化
- * @param row 行数据
+ * 監聽 URL 值的變化
+ * @param row 行數據
  */
 const changeUrl = (row: IProject) => {
     if (row.id === currentProjectId.value && row.url !== currentMockUrl.value) {
@@ -75,19 +75,19 @@ const changeUrl = (row: IProject) => {
 }
 
 /**
- * 添加一个项目，项目 ID 根据时间戳生成
+ * 添加一個項目，項目 ID 根據時間戳生成
  */
 const addItem = () => {
     projects.value.push({
         id: nanoid(),
-        name: "示例项目",
+        name: "範例",
         url: "http://localhost:8080",
         desc: "",
     })
 }
 
 /**
- * 删除一个项目
+ * 刪除一個項目
  * @param id 项目 ID
  */
 const delItem = (id: string) => {

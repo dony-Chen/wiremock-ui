@@ -1,7 +1,7 @@
 <template>
-    <el-form-item label="响应类型">
+    <el-form-item label="響應類型">
         <el-radio-group v-model="selectedItem!.metadata.render.response.responseType">
-            <el-radio-button label="none">无</el-radio-button>
+            <el-radio-button label="none">無</el-radio-button>
             <el-radio-button label="direct">Direct</el-radio-button>
             <el-radio-button label="fault">Fault</el-radio-button>
             <el-radio-button label="proxy">Proxy</el-radio-button>
@@ -23,7 +23,7 @@
         <plain-headers v-model="selectedItem!.metadata.render.response.direct.headers"></plain-headers>
         <el-form-item label="Body">
             <el-radio-group v-model="selectedItem!.metadata.render.response.direct.bodyType" @change="changeBodyType">
-                <el-radio label="none">无</el-radio>
+                <el-radio label="none">無</el-radio>
                 <el-radio label="json">JSON</el-radio>
                 <el-radio label="xml">XML</el-radio>
                 <el-radio label="html">HTML</el-radio>
@@ -46,13 +46,13 @@
         </el-form-item>
     </template>
     <template v-if="selectedItem!.metadata.render.response.responseType === 'fault'">
-        <el-form-item label="错误类型">
+        <el-form-item label="錯誤類型">
             <el-radio-group v-model="selectedItem!.response.fault" style="flex-direction: column;align-items: flex-start;">
-                <el-radio label="EMPTY_RESPONSE">不发送响应数据，直接关闭 socket 连接</el-radio>
-                <el-radio label="RANDOM_DATA_THEN_CLOSE">发送非法响应数据，然后关闭 socket
-                    连接</el-radio>
-                <el-radio label="MALFORMED_RESPONSE_CHUNK">发送 200 状态码和非法响应数据，然后关闭 socket
-                    连接</el-radio>
+                <el-radio label="EMPTY_RESPONSE">不發送響應數據，直接關閉 socket 連接</el-radio>
+                <el-radio label="RANDOM_DATA_THEN_CLOSE">發送非法響應數據，然後關閉 socket
+                    連接</el-radio>
+                <el-radio label="MALFORMED_RESPONSE_CHUNK">發送 200 狀態碼和非法響應數據，然後關閉 socket
+                    連接</el-radio>
                 <el-radio label="CONNECTION_RESET_BY_PEER">Peer connection
                     reset</el-radio>
             </el-radio-group>
@@ -64,13 +64,13 @@
         </el-form-item>
         <plain-headers v-model="selectedItem!.metadata.render.response.proxy.headers" tips="（不支持多值 Header）"></plain-headers>
     </template>
-    <el-form-item label="响应延时">
+    <el-form-item label="延遲">
         <el-radio-group v-model="selectedItem!.metadata.render.response.delayType">
-            <el-radio label="none">无</el-radio>
-            <el-radio label="fixedDelayMilliseconds">固定延时</el-radio>
-            <el-radio label="chunkedDribbleDelay">模拟弱网</el-radio>
-            <el-radio label="lognormal">随机延时（中值）</el-radio>
-            <el-radio label="uniform">随机延时（范围）</el-radio>
+            <el-radio label="none">無</el-radio>
+            <el-radio label="fixedDelayMilliseconds">固定延遲</el-radio>
+            <el-radio label="chunkedDribbleDelay">模擬弱網</el-radio>
+            <el-radio label="lognormal">隨機延時（中值）</el-radio>
+            <el-radio label="uniform">隨機延時（範圍）</el-radio>
         </el-radio-group>
     </el-form-item>
     <el-form-item v-if="selectedItem!.metadata.render.response.delayType === 'fixedDelayMilliseconds'">
@@ -80,11 +80,11 @@
     </el-form-item>
     <el-form-item v-if="selectedItem!.metadata.render.response.delayType === 'chunkedDribbleDelay'">
         <el-input v-model="selectedItem!.response.chunkedDribbleDelay!.numberOfChunks" class="delay-input not-last-input">
-            <template #prefix><span>Chunk 数量</span></template>
-            <template #suffix>个</template>
+            <template #prefix><span>Chunk 數量</span></template>
+            <template #suffix>個</template>
         </el-input>
         <el-input v-model="selectedItem!.response.chunkedDribbleDelay!.totalDuration" class="delay-input">
-            <template #prefix><span>总响应时间</span></template>
+            <template #prefix><span>總響應時間</span></template>
             <template #suffix>ms</template>
         </el-input>
     </el-form-item>
@@ -94,7 +94,7 @@
             <template #suffix>ms</template>
         </el-input>
         <el-input v-model="selectedItem!.response.delayDistribution!.sigma" class="delay-input">
-            <template #prefix><span>标准差</span></template>
+            <template #prefix><span>標準差</span></template>
         </el-input>
     </el-form-item>
     <el-form-item v-if="selectedItem!.metadata.render.response.delayType === 'uniform'">

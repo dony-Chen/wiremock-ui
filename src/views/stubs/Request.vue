@@ -37,7 +37,7 @@
 
     <el-form-item label="Authorization">
         <el-radio-group v-model="selectedItem!.metadata.render.request.authType">
-            <el-radio label="none">无</el-radio>
+            <el-radio label="none">無</el-radio>
             <el-radio label="basicAuth">Basic Auth</el-radio>
         </el-radio-group>
     </el-form-item>
@@ -52,7 +52,7 @@
 
     <el-form-item label="Body">
         <el-radio-group v-model="selectedItem!.metadata.render.request.bodyType">
-            <el-radio label="none">无</el-radio>
+            <el-radio label="none">無</el-radio>
             <el-radio label="raw">raw</el-radio>
             <el-radio label="form-data">form-data</el-radio>
             <el-radio label="x-www-form-urlencoded">x-www-form-urlencoded</el-radio>

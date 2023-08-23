@@ -5,7 +5,7 @@
                 <el-image class="logo" :src="logoSrc" />
             </div>
             <el-select v-model="currentProjectId" clearable value-key="id" popper-class="select-project"
-                :placeholder="projects.length === 0 ? '点击左侧图标添加项目' : '请选择一个项目'" @change="changeProject" @clear="clearSelected">
+                :placeholder="projects.length === 0 ? '點擊左側圖標添加項目' : '請選擇一個項目'" @change="changeProject" @clear="clearSelected">
                 <el-option v-for="item in projects" :label="item.name" :value="item.id">
                     <span>{{ item.name }}</span>
                 </el-option>
@@ -111,7 +111,7 @@ const goToGitHub = () => {
 
 }
 
-//改变默认选择框样式
+//改變默認選擇框樣式
 .navbar {
     :deep(:focus-visible) {
         outline: -webkit-focus-ring-color auto 0px;

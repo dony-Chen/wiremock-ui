@@ -18,7 +18,7 @@
     <plain-headers v-model="selectedItem!.metadata.render.postServeActions[props.index].parameters.headers" tips="（不支持多值 Header）"></plain-headers>
     <el-form-item label="Body">
         <el-radio-group v-model="selectedItem!.metadata.render.postServeActions[props.index].parameters.bodyType" @change="changeBodyType">
-            <el-radio label="none">无</el-radio>
+            <el-radio label="none">無</el-radio>
             <el-radio label="json">JSON</el-radio>
             <el-radio label="xml">XML</el-radio>
             <el-radio label="html">HTML</el-radio>
@@ -31,7 +31,7 @@
     </el-form-item>
     <el-form-item label="响应延时">
         <el-radio-group v-model="selectedItem!.metadata.render.postServeActions[props.index].parameters.delayType">
-            <el-radio label="none">无</el-radio>
+            <el-radio label="none">無</el-radio>
             <el-radio label="fixed">固定延时</el-radio>
             <el-radio label="lognormal">随机延时（中值）</el-radio>
             <el-radio label="uniform">随机延时（范围）</el-radio>
