@@ -272,7 +272,7 @@ export interface IStubMapping {
     // body、jsonBody、base64Body、bodyFileName 有且仅有一个
     headers?: {                   //响应 Headers，值类型为 string | Array<string>
       [key: string]: string | Array<string>
-    },                 
+    },
     // Header 的值一般为 string，即一个 Header 名称只有一个值。
     // 如果一个 Header 名称需要多个值，使用 Array<string>
     body?: string,                //响应正文：纯文本
@@ -368,6 +368,14 @@ interface ISearchOptions {
   offset: number,         //开始索引，从 0 开始，包括 0
   limit: number           //查询数量
 }
+export const R_All_Mappings = (mockUrl: string) => {
+  return httpSingle({
+    url: `${mockUrl}/__admin/mappings`,
+    method: 'get',
+  });
+};
+
+
 export const R_Mappings = (mockUrl: string, params: ISearchOptions) => {
   return httpSingle({
     url: `${mockUrl}/__admin/mappings`,
