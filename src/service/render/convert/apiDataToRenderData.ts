@@ -187,14 +187,14 @@ export const apiDataToRenderData = (item: IStubMapping) => {
         });
 
         item.metadata.render.postServeActions[index].parameters.delayType = (webhook.parameters.delay && webhook.parameters.delay.type) || 'none'
-        if($(webhook.parameters.delay)) webhook.parameters.delay = {
+        if ($(webhook.parameters.delay)) webhook.parameters.delay = {
             type: 'fixed'
         }
-        if($(webhook.parameters.delay!.milliseconds)) webhook.parameters.delay!.milliseconds = 0
-        if($(webhook.parameters.delay!.median)) webhook.parameters.delay!.median = 0
-        if($(webhook.parameters.delay!.sigma)) webhook.parameters.delay!.sigma = 0
-        if($(webhook.parameters.delay!.lower)) webhook.parameters.delay!.lower = 0
-        if($(webhook.parameters.delay!.upper)) webhook.parameters.delay!.upper = 0
+        if ($(webhook.parameters.delay!.milliseconds)) webhook.parameters.delay!.milliseconds = 0
+        if ($(webhook.parameters.delay!.median)) webhook.parameters.delay!.median = 0
+        if ($(webhook.parameters.delay!.sigma)) webhook.parameters.delay!.sigma = 0
+        if ($(webhook.parameters.delay!.lower)) webhook.parameters.delay!.lower = 0
+        if ($(webhook.parameters.delay!.upper)) webhook.parameters.delay!.upper = 0
 
     });
     return item

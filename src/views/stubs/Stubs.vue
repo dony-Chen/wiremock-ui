@@ -170,6 +170,7 @@
 </template>
 
 <script lang="ts" setup>
+import { toRaw } from 'vue';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount, ref, reactive, watch, defineAsyncComponent, h } from 'vue';
 import { computed } from '@vue/reactivity';
@@ -350,7 +351,7 @@ const isUnsave = computed(() => (item: IStubMapping) => {
 const listFilter = ref('')
 const localSearch = (item: any) => {
   // TODO 語法搜索，如title:客服介入&& urL:/abc/dwew
-  return (!listFilter.value || ((item.name || '').indexOf(listFilter.value) !== -1 || (item.url || '').indexOf(listFilter.value) !== -1))
+  return (!listFilter.value || ((item.request.url || '').indexOf(listFilter.value) !== -1) || (item.name || '').indexOf(listFilter.value) !== -1)
 }
 
 /**
@@ -400,20 +401,27 @@ const saveStubMapping = async () => {
     selectedItem.value!.metadata.wmui.createTime = formatDateTime(new Date().getTime())
   }
 
-  const t1 = await R_All_Mappings(currentMockUrl.value).then((res: any) => {
+  let t1 = await R_All_Mappings(currentMockUrl.value).then((res: any) => {
     return res.mappings
   }).catch(err => {
     ErrorHandler.create(err).end()
   })
-  let test = selectedItem.value!.name
-  let user = t1.find((user: any) => user.name === selectedItem.value!.name);
 
+  let selectedItemValue = toRaw(selectedItem.value!)
 
-  if (user) {
-    //const t1 = await getAllStubMappings()
-    // const cloneItem = "test"
-    // return Promise.resolve("close")
-    let stub_name_existed_message = 'stub名稱 「' + user.name + '」已存在，請修改stub名稱後再保存！'
+  const index = t1.findIndex((item: any) => item.id === selectedItem.value!.id)
+  if (index != -1) {
+    t1[index]['name'] = selectedItemValue.name
+  }
+  else {
+    t1.push(selectedItemValue)
+  }
+
+  let user = t1.filter((user: any) => user.name == selectedItemValue.name);
+
+  if (user.length > 1) {
+
+    let stub_name_existed_message = 'stub名稱 「' + user[0].name + '」已存在，請修改stub名稱後再保存！'
     ElMessageBox({
       title: '提示', //MessageBox 標題
       message: stub_name_existed_message, //MessageBox 消息内容
@@ -526,23 +534,84 @@ const saveItemBeforeNextAction = async (): Promise<Action> => {
       distinguishCancelAndClose: true
     }
   ).then(async () => { //保存修改
-    userAction = 'confirm' as Action
+
+
+    let t1 = await R_All_Mappings(currentMockUrl.value).then((res: any) => {
+      return res.mappings
+    }).catch(err => {
+      ErrorHandler.create(err).end()
+    })
+    let selectedItemValue = toRaw(selectedItem.value!)
+
+    const index = t1.findIndex((item: any) => item.id === selectedItem.value!.id)
+    if (index != -1) {
+      t1[index]['name'] = selectedItemValue.name
+    }
+    else {
+      t1.push(selectedItemValue)
+    }
+
+    let user = t1.filter((user: any) => user.name == selectedItemValue.name);
+
+
     // 如果是添加未保存的數據
     if (!tableData.value[0].id) {
-      await C_Mapping(currentMockUrl.value, renderDataToApiData(tableData.value[0])).then((res: any) => {
-        tableData.value[0] = apiDataToRenderData(res)
-      }).catch((err) => {
-        ErrorHandler.create(err).end()
-      })
+      if (user.length > 1) {
+        let stub_name_existed_message = 'stub名稱 「' + user[0].name + '」已存在，請修改stub名稱後再保存！'
+        ElMessageBox({
+          title: '提示', //MessageBox 標題
+          message: stub_name_existed_message, //MessageBox 消息内容
+          confirmButtonText: '确定', //確認按鈕的文字内容
+          cancelButtonText: '取消', //取消按鈕的文字内容
+          showCancelButton: false, //是否顯示取消按鈕
+          closeOnClickModal: false, //是否可通过点击遮罩关闭
+          type: 'warning', //消息类型，用于显示图标
+        }).then(() => {
+          ElMessage.success('請修改stub名稱~');
+        }).catch(() => {
+          ElMessage.success('請修改stub名稱~');
+        });
+        userAction = 'close' as Action
+      }
+      else {
+        await C_Mapping(currentMockUrl.value, renderDataToApiData(tableData.value[0])).then((res: any) => {
+          tableData.value[0] = apiDataToRenderData(res)
+          userAction = 'confirm' as Action
+        }).catch((err) => {
+          ErrorHandler.create(err).end()
+        })
+      }
+
       return
     }
     // 如果是修改未保存的數據
     if (JSON.stringify(selectedItem.value) !== JSON.stringify(resetItem.value)) {
-      await U_Mapping(currentMockUrl.value, selectedItem.value!.id as string, renderDataToApiData(selectedItem.value as IStubMapping)).then((res: any) => {
-        tableData.value[selectedIndex.value] = apiDataToRenderData(res)
-      }).catch((err) => {
-        ErrorHandler.create(err).end()
-      })
+
+      if (user.length > 1) {
+        let stub_name_existed_message = 'stub名稱 「' + user[0].name + '」已存在，請修改stub名稱後再保存！'
+        ElMessageBox({
+          title: '提示', //MessageBox 標題
+          message: stub_name_existed_message, //MessageBox 消息内容
+          confirmButtonText: '确定', //確認按鈕的文字内容
+          cancelButtonText: '取消', //取消按鈕的文字内容
+          showCancelButton: false, //是否顯示取消按鈕
+          closeOnClickModal: false, //是否可通过点击遮罩关闭
+          type: 'warning', //消息类型，用于显示图标
+        }).then(() => {
+          ElMessage.success('請修改stub名稱~');
+        }).catch(() => {
+          ElMessage.success('請修改stub名稱~');
+        });
+        userAction = 'close' as Action
+      }
+      else {
+        await U_Mapping(currentMockUrl.value, selectedItem.value!.id as string, renderDataToApiData(selectedItem.value as IStubMapping)).then((res: any) => {
+          tableData.value[selectedIndex.value] = apiDataToRenderData(res)
+          userAction = 'confirm' as Action
+        }).catch((err) => {
+          ErrorHandler.create(err).end()
+        })
+      }
       return
     }
   }).catch((action: Action) => { //放棄修改或關閉彈窗
