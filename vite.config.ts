@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
-export default ({ mode }: { mode: any }) => {
+export default ({ mode }) => {
     //process.env = {...process.env, ...loadEnv(mode, process.cwd())};
     process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
     const port = process.env.VITE_PORT ? parseInt(process.env.VITE_PORT) : 5173;
