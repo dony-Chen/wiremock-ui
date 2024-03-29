@@ -358,10 +358,9 @@ export const U_Mapping = (mockUrl: string, mappingUUID: string, params: IStubMap
 /**
  * 查询指定【 mockUrl 】mapping 列表数据
  * 
- * 查询结果为 [offset, offset + limit -1]
+ * 查询结果為所有stubs
  * 
  * @param mockUrl
- * @param params
  * @returns {*}
  */
 interface ISearchOptions {
@@ -375,7 +374,15 @@ export const R_All_Mappings = (mockUrl: string) => {
   });
 };
 
-
+/**
+ * 查询指定【 mockUrl 】mapping 列表数据
+ * 
+ * 查询结果为 [offset, offset + limit -1]
+ * 
+ * @param mockUrl
+ * @param params
+ * @returns {*}
+ */
 export const R_Mappings = (mockUrl: string, params: ISearchOptions) => {
   return httpSingle({
     url: `${mockUrl}/__admin/mappings`,
